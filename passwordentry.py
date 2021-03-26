@@ -6,11 +6,19 @@ win1 = tk.Tk()
 win1.geometry('400x300')
 win1.title("Give me your username and password")
 
-# make a class of objects called username, make the username and passwor
-# attributes of this.
-# write the attributes to a csv
-# practive uploading different versions of this code to git each day
-# until finised
+class user:
+    access = True
+    username = ""
+    password = ""
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+
+# enter function has conditional, it will use for statement to iterate
+# through csv to find item that == user entered name and password, both
+# if it finds both let in, else show incorrect msg on 1st screen
+# add an extra part to each name and password pair entered, to ensure that
+# they are both from the same pair. 
 
 def enter():
     win2 = tk.Tk()
@@ -24,10 +32,12 @@ def enter():
 def enter_new_info():
     global giveusernamee
     global givepassworde
-    newun = giveusernamee.get()
-    newp = givepassworde.get()
-    print(newun)
-    print(newp)
+    newuser = user(giveusernamee.get(), givepassworde.get())
+    lst = [newuser.access, newuser.username, newuser.password]
+    with open('/Users/timrandall/Projects/passwordentry/userinfo.csv', mode='a') as file1:
+        write1 = csv.writer(file1, delimiter=',')
+        write1.writerow(lst)
+        
 
 def newuser():
     global giveusernamee
