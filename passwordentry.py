@@ -14,22 +14,39 @@ class user:
         self.username = username
         self.password = password
 
-# enter function has conditional, it will use for statement to iterate
-# through csv to find item that == user entered name and password, both
-# if it finds both let in, else show incorrect msg on 1st screen
-# add an extra part to each name and password pair entered, to ensure that
-# they are both from the same pair. 
-
 def enter():
-    win2 = tk.Tk()
-    enterl = tk.Label(win2, text="Access granted!")
-    enterl.grid(column=0, row=0)
-    win1.destroy()
-    win2.geometry('400x300')
-    win2.title("^^ U got in!! ^^")
-    win2.mainloop()
+    global usernamee
+    global passworde
+    usernamematch = False
+    passwordmatch = False
+    userentered = user(usernamee.get(), passworde.get())
+    with open('/Users/timrandall/Projects/passwordentry/userinfo.csv', mode='r') as file1:
+        csvreadah = csv.reader(file1, delimiter=',')
+        for row in csvreadah:
+            for item in row:
+                if item == userentered.username:
+                    usernamematch = True
+                else:
+                    pass
+                if item == userentered.password:
+                    passwordmatch = True
+                else:
+                    pass
+        if passwordmatch == True and usernamematch == True:
+            win2 = tk.Tk()
+            enterl = tk.Label(win2, text="Access granted!")
+            enterl.grid(column=0, row=0)
+            win1.destroy()
+            win2.geometry('400x300')
+            win2.title("^^ U got in!! ^^")
+            win2.mainloop()
+        else:
+            incorrectdisplay['text'] = "Incorrect name or password"
+            usernamee.delete(0, tk.END)
+            passworde.delete(0, tk.END)
 
 def enter_new_info():
+    global win3
     global giveusernamee
     global givepassworde
     newuser = user(giveusernamee.get(), givepassworde.get())
@@ -37,11 +54,11 @@ def enter_new_info():
     with open('/Users/timrandall/Projects/passwordentry/userinfo.csv', mode='a') as file1:
         write1 = csv.writer(file1, delimiter=',')
         write1.writerow(lst)
-        
 
 def newuser():
     global giveusernamee
     global givepassworde
+    global win3
     win3 = tk.Tk()
     explain2l = tk.Label(win3, text="Make up a username and password")
     explain2l.grid(column=0, row=0)
@@ -75,5 +92,7 @@ enterb = tk.Button(win1, text="Enter", command=enter)
 enterb.grid(column=1, row=3)
 newuserb = tk.Button(win1, text="New user", command=newuser)
 newuserb.grid(column=0, row=3)
+incorrectdisplay = tk.Label(win1, text='')
+incorrectdisplay.grid(column=0, row=4)
 
 win1.mainloop()
