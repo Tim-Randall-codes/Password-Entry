@@ -2,10 +2,6 @@ import tkinter as tk
 
 import csv
 
-win1 = tk.Tk()
-win1.geometry('400x300')
-win1.title("Give me your username and password")
-
 class user:
     access = True
     username = ""
@@ -17,6 +13,7 @@ class user:
 def enter():
     global usernamee
     global passworde
+    global incorrectdisplay
     usernamematch = False
     passwordmatch = False
     userentered = user(usernamee.get(), passworde.get())
@@ -54,11 +51,13 @@ def enter_new_info():
     with open('/Users/timrandall/Projects/passwordentry/userinfo.csv', mode='a') as file1:
         write1 = csv.writer(file1, delimiter=',')
         write1.writerow(lst)
+    first_win()
 
 def newuser():
     global giveusernamee
     global givepassworde
     global win3
+    global win1
     win3 = tk.Tk()
     explain2l = tk.Label(win3, text="Make up a username and password")
     explain2l.grid(column=0, row=0)
@@ -77,22 +76,29 @@ def newuser():
     win3.title("Give me your info! ^^")
     win3.mainloop()
 
-
-explainl = tk.Label(win1, text="Enter your username and password!")
-explainl.grid(column=0, row=0)
-usernamel = tk.Label(win1, text="Username:")
-usernamel.grid(column=0, row=1)
-passwordl = tk.Label(win1, text="Password:")
-passwordl.grid(column=0, row=2)
-usernamee = tk.Entry(win1, width=15)
-usernamee.grid(column=1, row=1)
-passworde = tk.Entry(win1, width=15)
-passworde.grid(column=1, row=2)
-enterb = tk.Button(win1, text="Enter", command=enter)
-enterb.grid(column=1, row=3)
-newuserb = tk.Button(win1, text="New user", command=newuser)
-newuserb.grid(column=0, row=3)
-incorrectdisplay = tk.Label(win1, text='')
-incorrectdisplay.grid(column=0, row=4)
-
-win1.mainloop()
+def first_win():
+    global win1
+    global usernamee
+    global passworde
+    global incorrectdisplay
+    win1 = tk.Tk()
+    win1.geometry('400x300')
+    win1.title("Give me your username and password")
+    explainl = tk.Label(win1, text="Enter your username and password!")
+    explainl.grid(column=0, row=0)
+    usernamel = tk.Label(win1, text="Username:")
+    usernamel.grid(column=0, row=1)
+    passwordl = tk.Label(win1, text="Password:")
+    passwordl.grid(column=0, row=2)
+    usernamee = tk.Entry(win1, width=15)
+    usernamee.grid(column=1, row=1)
+    passworde = tk.Entry(win1, width=15)
+    passworde.grid(column=1, row=2)
+    enterb = tk.Button(win1, text="Enter", command=enter)
+    enterb.grid(column=1, row=3)
+    newuserb = tk.Button(win1, text="New user", command=newuser)
+    newuserb.grid(column=0, row=3)
+    incorrectdisplay = tk.Label(win1, text='')
+    incorrectdisplay.grid(column=0, row=4)
+    win1.mainloop()
+first_win()
